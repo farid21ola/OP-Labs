@@ -1,25 +1,30 @@
 ﻿#include <iostream>
 using namespace std;
 
-void Shift(int S[], int l, int k) {
-    int* S2 = new int[sizeof(&S) + 1];
+void Shift(int S[], int l, int k , int n) {
+    int* S2 = new int[n];
     if (l == 1) {
-        for (int i = 0; i < sizeof(&S) + 1; i++) {
-            S2[(i + k) % (sizeof(&S) + 1)] = S[i];
+        for (int i = 0; i < n; i++) {
+            S2[(i + k) % (n)] = S[i];
         }
     }
     else {
-        for (int i = 0; i < sizeof(&S) + 1; i++) {
-            S2[(sizeof(&S) + 1 + i - k) % (sizeof(&S) + 1)] = S[i];
+        for (int i = 0; i < n; i++) {
+            S2[(n + i - k) % (n)] = S[i];
         }
     }
 
-    for (int i = 0; i < sizeof(&S) + 1; i++) {
+    for (int i = 0; i < n; i++) {
         S[i] = S2[i];
     }
 
-    delete[] S2;
+    delete [] S2;
 }
+void Add(int S[], int n) {
+    for (int i = 0; i < n; i++)
+        cin >> S[i];
+}
+
 void Print(int S[], int size) {
     for (int i = 0; i < size; i++) {
         cout << S[i];
@@ -29,15 +34,21 @@ void Print(int S[], int size) {
 
 int main()
 {
-    int* S = new int[9] {0, 1, 2, 3, 4, 5, 6, 7, 8};
-    Print(S, sizeof(&S) + 1);
+    cout << "Enter arrays size" << endl;
+    int n;
+    cin >> n;
+    int* S = new int[n];
+    cout << "Fill array" << endl;
+    Add(S,n);
+    Print(S, n);
     int l, k;
     cout << "How much shift of position" << endl;
     cin >> k;
     cout << "To shift to the right enter(1), to the left (-1)" << endl;
     cin >> l;
     cout << "Shifted" << endl;
-    Shift(S, l, k);
-    Print(S, sizeof(&S) + 1);
+    Shift(S, l, k, n);
+    Print(S, n);
+    delete [] S;
     return 0;
 }
